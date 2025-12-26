@@ -1,66 +1,20 @@
-## Foundry
+# Solidity Contracts Lab
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+A curated laboratory for experimenting with Solidity smart contracts and tests.
 
-Foundry consists of:
+This repository focuses on **clear contract implementations**, **solid testing practices**, and **hands-on exploration** of common patterns in the EVM ecosystem.
 
-- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
-- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
-- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
-- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+This project is **not** intended to be a production-ready library.
 
-## Documentation
+## Goals
 
-https://book.getfoundry.sh/
+- Provide minimal and readable Solidity contracts
+- Demonstrate idiomatic testing patterns
+- Serve as a playground for exploring EVM behavior
+- Enable comparison between different implementation approaches
 
-## Usage
+## Philosophy
 
-### Build
-
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+* Prefer simplicity over abstraction
+* Make behavior explicit, not implicit
+* Readability over cleverness
