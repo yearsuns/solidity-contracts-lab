@@ -10,7 +10,7 @@ contract MintableTokenTest is Test {
 
     address owner = address(this);
     address alice = address(0xA11CE);
-    address bob   = address(0xB0B);
+    address bob = address(0xB0B);
 
     function setUp() public {
         token = new MintableToken();
@@ -47,9 +47,7 @@ contract MintableTokenTest is Test {
 
     function test_mint_nonOwner_revertsWithOwnableUnauthorizedAccount() public {
         vm.prank(alice);
-        vm.expectRevert(
-            abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, alice)
-        );
+        vm.expectRevert(abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, alice));
         token.mint(alice, 1 ether);
     }
 
@@ -58,11 +56,7 @@ contract MintableTokenTest is Test {
         uint256 overflowAmount = type(uint256).max - currentSupply + 1;
 
         vm.expectRevert(
-            abi.encodeWithSelector(
-                MintableToken.ERC20TotalSupplyOverflow.selector,
-                currentSupply,
-                overflowAmount
-            )
+            abi.encodeWithSelector(MintableToken.ERC20TotalSupplyOverflow.selector, currentSupply, overflowAmount)
         );
 
         token.mint(alice, overflowAmount);

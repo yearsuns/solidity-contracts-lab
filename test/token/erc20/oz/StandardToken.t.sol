@@ -9,9 +9,9 @@ contract StandardTokenTest is Test {
     StandardToken token;
 
     address deployer = address(0xD00D);
-    address alice    = address(0xA11CE);
-    address bob      = address(0xB0B);
-    address carol    = address(0xCAFE);
+    address alice = address(0xA11CE);
+    address bob = address(0xB0B);
+    address carol = address(0xCAFE);
 
     uint256 constant INITIAL_SUPPLY = 10000 ether;
 
@@ -84,18 +84,14 @@ contract StandardTokenTest is Test {
 
     function test_transfer_toZeroAddress_revertsWithERC20InvalidReceiver() public {
         vm.prank(deployer);
-        vm.expectRevert(
-            abi.encodeWithSelector(IERC20Errors.ERC20InvalidReceiver.selector, address(0))
-        );
+        vm.expectRevert(abi.encodeWithSelector(IERC20Errors.ERC20InvalidReceiver.selector, address(0)));
         /// forge-lint: disable-next-line(erc20-unchecked-transfer)
         token.transfer(address(0), 1);
     }
 
     function test_transfer_insufficientBalance_revertsWithERC20InsufficientBalance() public {
         vm.prank(alice);
-        vm.expectRevert(
-            abi.encodeWithSelector(IERC20Errors.ERC20InsufficientBalance.selector, alice, 0, 1)
-        );
+        vm.expectRevert(abi.encodeWithSelector(IERC20Errors.ERC20InsufficientBalance.selector, alice, 0, 1));
         /// forge-lint: disable-next-line(erc20-unchecked-transfer)
         token.transfer(bob, 1);
     }
@@ -128,9 +124,7 @@ contract StandardTokenTest is Test {
 
     function test_approve_spenderZeroAddress_revertsWithERC20InvalidSpender() public {
         vm.prank(deployer);
-        vm.expectRevert(
-            abi.encodeWithSelector(IERC20Errors.ERC20InvalidSpender.selector, address(0))
-        );
+        vm.expectRevert(abi.encodeWithSelector(IERC20Errors.ERC20InvalidSpender.selector, address(0)));
         token.approve(address(0), 10);
     }
 
@@ -163,9 +157,7 @@ contract StandardTokenTest is Test {
         token.approve(alice, 10);
 
         vm.prank(alice);
-        vm.expectRevert(
-            abi.encodeWithSelector(IERC20Errors.ERC20InsufficientAllowance.selector, alice, 10, 20)
-        );
+        vm.expectRevert(abi.encodeWithSelector(IERC20Errors.ERC20InsufficientAllowance.selector, alice, 10, 20));
         /// forge-lint: disable-next-line(erc20-unchecked-transfer)
         token.transferFrom(deployer, bob, 20);
     }
@@ -177,9 +169,7 @@ contract StandardTokenTest is Test {
 
         // Act: bob tries to transfer 10 from alice to carol, should revert due to alice balance
         vm.prank(bob);
-        vm.expectRevert(
-            abi.encodeWithSelector(IERC20Errors.ERC20InsufficientBalance.selector, alice, 0, 10)
-        );
+        vm.expectRevert(abi.encodeWithSelector(IERC20Errors.ERC20InsufficientBalance.selector, alice, 0, 10));
         /// forge-lint: disable-next-line(erc20-unchecked-transfer)
         token.transferFrom(alice, carol, 10);
     }
