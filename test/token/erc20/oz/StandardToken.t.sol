@@ -16,8 +16,8 @@ contract StandardTokenTest is Test {
     uint256 constant INITIAL_SUPPLY = 10000 ether;
 
     // Events (for expectEmit)
-    event Transfer(address indexed _from, address indexed _to, uint256 value);
-    event Approval(address indexed _owner, address indexed _spender, uint256 value);
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    event Approval(address indexed owner, address indexed spender, uint256 value);
 
     function setUp() public {
         // Deploy with `deployer` so initial supply is owned by deployer
