@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: help test build anvil deploy-local deploy-sepolia deploy-mainnet
+.PHONY: help test build fmt-check fmt anvil deploy-local deploy-sepolia deploy-mainnet
 
 help: ## Show this help
 	@awk 'BEGIN {FS = ":.*##"} \
@@ -12,6 +12,12 @@ test: ## Run tests
 
 build: ## Build contracts
 	forge build
+
+fmt-check: ## Check code format
+	forge fmt --check
+
+fmt: ## Format code
+	forge fmt
 
 anvil: ## Start local anvil
 	anvil
