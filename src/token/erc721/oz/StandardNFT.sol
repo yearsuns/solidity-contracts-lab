@@ -12,6 +12,7 @@ contract StandardNFT is ERC721 {
         }
     }
 
+    // forge-lint: disable-next-line(mixed-case-function)
     function _baseURI() internal pure override(ERC721) returns (string memory) {
         return "ipfs://QmXXX/";
     }

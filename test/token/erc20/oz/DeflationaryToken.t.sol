@@ -121,6 +121,7 @@ contract DeflationaryTokenTest is Test {
         uint256 amount = 100e18;
 
         vm.prank(owner);
+        // forge-lint: disable-next-line(erc20-unchecked-transfer)
         token.transfer(alice, amount);
 
         // owner 是免税，但即便不免税，wallet->wallet 也不该收税
@@ -135,6 +136,7 @@ contract DeflationaryTokenTest is Test {
 
         // 给 pair 先一些币，模拟池子有库存
         vm.prank(owner);
+        // forge-lint: disable-next-line(erc20-unchecked-transfer)
         token.transfer(pair, amount);
 
         // owner 免税，pair 不是免税；这里的 buy 是 pair -> alice
@@ -151,6 +153,7 @@ contract DeflationaryTokenTest is Test {
         emit Transfer(pair, address(0), burnAmt);
         emit Transfer(pair, treasury, treasAmt);
         emit Transfer(pair, alice, net);
+        // forge-lint: disable-next-line(erc20-unchecked-transfer)
         token.transfer(alice, amount);
 
         assertEq(token.balanceOf(alice), aliceBefore + net);
@@ -166,6 +169,7 @@ contract DeflationaryTokenTest is Test {
 
         // 给 alice 一些币（从 owner 转，owner 免税，不影响）
         vm.prank(owner);
+        // forge-lint: disable-next-line(erc20-unchecked-transfer)
         token.transfer(alice, amount);
 
         uint256 supplyBefore = token.totalSupply();
@@ -181,6 +185,7 @@ contract DeflationaryTokenTest is Test {
         emit Transfer(alice, address(0), burnAmt);
         emit Transfer(alice, treasury, treasAmt);
         emit Transfer(alice, pair, net);
+        // forge-lint: disable-next-line(erc20-unchecked-transfer)
         token.transfer(pair, amount);
 
         assertEq(token.balanceOf(pair), pairBefore + net);
@@ -195,6 +200,7 @@ contract DeflationaryTokenTest is Test {
 
         // 给 pair 一些币，模拟池子有库存
         vm.prank(owner);
+        // forge-lint: disable-next-line(erc20-unchecked-transfer)
         token.transfer(pair, amount);
 
         uint256 supplyBefore = token.totalSupply();
@@ -205,6 +211,7 @@ contract DeflationaryTokenTest is Test {
         vm.prank(pair);
         vm.expectEmit(true, true, false, true);
         emit Transfer(pair, alice, amount);
+        // forge-lint: disable-next-line(erc20-unchecked-transfer)
         token.transfer(alice, amount);
 
         // 因为 burnAmt=0 且 treasAmt=0，所以 alice 应拿到全额，totalSupply 不变，treasury 不变
@@ -220,6 +227,7 @@ contract DeflationaryTokenTest is Test {
 
         // 给 alice 一些币（从 owner 转，owner 免税）
         vm.prank(owner);
+        // forge-lint: disable-next-line(erc20-unchecked-transfer)
         token.transfer(alice, amount);
 
         uint256 supplyBefore = token.totalSupply();
@@ -235,6 +243,7 @@ contract DeflationaryTokenTest is Test {
         vm.expectEmit(true, true, false, true);
         emit Transfer(alice, treasury, treasAmt);
         emit Transfer(alice, pair, net);
+        // forge-lint: disable-next-line(erc20-unchecked-transfer)
         token.transfer(pair, amount);
 
         assertEq(burnAmt, 0);
@@ -253,6 +262,7 @@ contract DeflationaryTokenTest is Test {
 
         // 给 pair 一些币
         vm.prank(owner);
+        // forge-lint: disable-next-line(erc20-unchecked-transfer)
         token.transfer(pair, amount);
 
         // 把 alice 设为免税：pair -> alice 应该不扣
@@ -263,6 +273,7 @@ contract DeflationaryTokenTest is Test {
         uint256 treasuryBefore = token.balanceOf(treasury);
 
         vm.prank(pair);
+        // forge-lint: disable-next-line(erc20-unchecked-transfer)
         token.transfer(alice, amount);
 
         assertEq(token.balanceOf(alice), amount);
@@ -276,10 +287,12 @@ contract DeflationaryTokenTest is Test {
         // 金额避开整百，可以覆盖计算时的小数问题
         uint256 amount = 123456789123456789;
         vm.prank(owner);
+        // forge-lint: disable-next-line(erc20-unchecked-transfer)
         token.transfer(alice, amount);
 
         // 先开启时卖出会扣税
         vm.prank(alice);
+        // forge-lint: disable-next-line(erc20-unchecked-transfer)
         token.transfer(pair, amount);
 
         // 关闭 AMM pair
@@ -288,6 +301,7 @@ contract DeflationaryTokenTest is Test {
 
         // 再给 alice 一次币
         vm.prank(owner);
+        // forge-lint: disable-next-line(erc20-unchecked-transfer)
         token.transfer(alice, amount);
 
         uint256 supplyBefore = token.totalSupply();
@@ -296,6 +310,7 @@ contract DeflationaryTokenTest is Test {
 
         // 此时卖出不应扣税（因为 isAMMPair[to]=false）
         vm.prank(alice);
+        // forge-lint: disable-next-line(erc20-unchecked-transfer)
         token.transfer(pair, amount);
 
         assertEq(token.balanceOf(pair), pairBefore + amount);
@@ -313,6 +328,7 @@ contract DeflationaryTokenTest is Test {
         // 金额避开整百，可以覆盖计算时的小数问题
         uint256 amount = 123456789123456789;
         vm.prank(owner);
+        // forge-lint: disable-next-line(erc20-unchecked-transfer)
         token.transfer(alice, amount);
 
         // alice approve bob，然后 bob 代卖到 pair
@@ -324,6 +340,7 @@ contract DeflationaryTokenTest is Test {
         uint256 pairBefore = token.balanceOf(pair);
 
         vm.prank(bob);
+        // forge-lint: disable-next-line(erc20-unchecked-transfer)
         token.transferFrom(alice, pair, amount);
 
         uint256 burnAmt = amount * token.BURN_BPS() / token.BPS_DENOM();

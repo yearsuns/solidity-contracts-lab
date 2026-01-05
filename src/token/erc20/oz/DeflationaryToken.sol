@@ -14,6 +14,7 @@ contract DeflationaryToken is ERC20, Ownable {
 
     address public treasury;
 
+    // forge-lint: disable-next-line(mixed-case-variable)
     mapping(address => bool) public isAMMPair;
     mapping(address => bool) public isExcludedFromFee;
 
@@ -23,13 +24,13 @@ contract DeflationaryToken is ERC20, Ownable {
 
     error ZeroAddress();
 
-    constructor(address initial_treasury) ERC20("DeflationaryToken", "DT") Ownable(msg.sender) {
-        if (initial_treasury == address(0)) revert ZeroAddress();
-        treasury = initial_treasury;
+    constructor(address initialTreasury) ERC20("DeflationaryToken", "DT") Ownable(msg.sender) {
+        if (initialTreasury == address(0)) revert ZeroAddress();
+        treasury = initialTreasury;
 
         // 常见免税：owner、treasury、合约自身
         isExcludedFromFee[msg.sender] = true;
-        isExcludedFromFee[initial_treasury] = true;
+        isExcludedFromFee[initialTreasury] = true;
         isExcludedFromFee[address(this)] = true;
 
         _mint(msg.sender, INITIAL_SUPPLY);
